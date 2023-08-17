@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS-Event</title>
+  </head>
+  <body>
+    <div
+      style="
+        width: 100%;
+        height: 70vh;
+        border: 1px solid black;
+        position: relative;
+      "
+      class="container"
+    >
+      <div
+        class="move"
+        style="
+          height: 50px;
+          width: 50px;
+          background-color: red;
+          position: absolute;
+        "
+      >
+        move
+      </div>
+    </div>
+    <!-- following container -->
+    <script>
+      const move = document.querySelector('.move');
+      const container = document.querySelector('.container');
+      const func = (event) => {
+        console.log(event.clientX, event.clientY);
+        move.style.left = `${event.clientX - 30}px`;
+        move.style.top = `${event.clientY - 30}px`;
+      };
+      move.addEventListener('mousedown', (event) => {
+        move.style.cursor = 'grabbing';
+        console.log('down');
+        container.addEventListener('mousemove', func);
+      });
+      move.addEventListener('mouseup', (event) => {
+        console.log('up');
+        move.style.cursor = 'auto';
+        document
+          .querySelector('.container')
+          .removeEventListener('mousemove', func);
+      });
+
+      container.addEventListener('mouseup', (event) => {
+        console.log('up container');
+        move.style.cursor = 'auto';
+        document
+          .querySelector('.container')
+          .removeEventListener('mousemove', func);
+      });
+    </script>
+
+    <!-- dependent on move div -->
+    <!-- <script>
+    const move = document.querySelector('.move');
+    const container = document.querySelector('.container');
+    const func = (event) => {
+      console.log(event.clientX, event.clientY);
+      move.style.left = `${event.clientX - 30}px`;
+      move.style.top = `${event.clientY - 30}px`;
+    };
+    move.addEventListener('mousedown', (event) => {
+      move.style.cursor = 'grabbing';
+      console.log('down');
+      move.addEventListener('mousemove', func);
+    });
+    move.addEventListener('mouseup', (event) => {
+      console.log('up');
+      move.style.cursor = 'auto';
+      document.querySelector('.move').removeEventListener('mousemove', func);
+    });
+
+    container.addEventListener('mouseup', (event) => {
+      console.log('up container');
+      move.style.cursor = 'auto';
+      document.querySelector('.move').removeEventListener('mousemove', func);
+    });
+  </script> -->
+  </body>
+</html>
